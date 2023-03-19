@@ -15,7 +15,7 @@ The remote machine is the machine to which we connect via ssh and through which 
 In the case of the `remote forwarding` mode, this must be the machine on which the port will be opened to listen for incoming connections.
 In the case of the `local forwarding` mode, this can be any machine from which the target ip and port are available, where we will forward the connection from the local port.
 
-**Important:** the remote machine must be listed in the authorized_keys file, which must be placed in the service's templates folder
+**Important:** the remote machine must be listed in the authorized_keys file, which must be placed in the service's templates folder  
 **Important:** the remote machine must be authorized using the private key id_rsa, which must be placed in the templates folder of the service
 
 * `autossh_remote_user` - linux-username for ssh connection to remote machine
