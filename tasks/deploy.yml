@@ -1,0 +1,31 @@
+---
+- name: Create directories for database service storage
+  file:
+    path: "{{ autossh_deploy_dir }}"
+    state: directory
+    mode: 0755
+    owner: "{{ default_user }}"
+
+- name: Create dockernet network for containers communication
+  import_role:
+    name: docker/network_create
+
+- name: Render docker-compose.yml 
+  template:
+    src: docker-compose.yml
+    dest: "{{ autossh_deploy_dir }}/docker-compose.yml"
+    owner: "{{ default_user }}"
+    mode: 0644
+  become: true
+
+- name: Render key files
+  template:
+    src: "{{ item }}"
+    dest: "{{ autossh_deploy_dir }}/{{ item }}"
+    owner: root
+    group: root
+    mode: 0600
+  loop:
+    - id_rsa
+    - known_hosts
+  become: true

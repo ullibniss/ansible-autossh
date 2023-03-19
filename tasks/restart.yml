@@ -1,0 +1,6 @@
+---
+- name: Stop autossh {{ autossh_name }} service
+  import_tasks: stop.yml
+
+- name: Start autossh {{ autossh_name }} service
+  import_tasks: start.yml

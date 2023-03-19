@@ -1,0 +1,15 @@
+---
+- name: Check logs for autossh {{ autossh_name }} service
+  command:
+    cmd: docker-compose logs --tail=200 -t
+    chdir: "{{ autossh_deploy_dir }}"
+  register: logs_result
+  changed_when: False
+
+- name: Print stdout from docker-compose ps
+  debug:
+    msg: "{{ logs_result.stdout }}"
+
+- name: Print stderr from docker-compose ps
+  debug:
+    msg: "{{ logs_result.stderr }}"

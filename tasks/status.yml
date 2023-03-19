@@ -1,0 +1,16 @@
+---
+- name: Check status for autossh {{ autossh_name }} service
+  command:
+    cmd: docker-compose ps
+    chdir: "{{ autossh_deploy_dir }}"
+  register: ps_result
+  failed_when: "' Up ' not in ps_result.stdout"
+  changed_when: False
+
+- name: Print stdout from docker-compose ps
+  debug:
+    msg: "{{ ps_result.stdout }}"
+
+- name: Print stderr from docker-compose ps
+  debug:
+    msg: "{{ ps_result.stderr }}"

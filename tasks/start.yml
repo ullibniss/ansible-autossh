@@ -1,0 +1,5 @@
+---
+- name: Start autossh {{ autossh_name }} service
+  command: docker-compose up -d
+  args:
+    chdir: "{{ autossh_deploy_dir }}"

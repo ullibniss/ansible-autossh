@@ -1,0 +1,19 @@
+---
+# Default variables for autossh.
+autossh_name: "ssh_default"    # Name, will be used as unique container name && path for directory with docker-compose
+autossh_mode: "-L"                  # Defines how the tunnel will be set up: "-R" is remote forward mode. "-L" means local forward mode.
+autossh_deploy_dir: "{{ DEPLOY_DIR }}/autossh/{{ autossh_name }}"
+
+
+autossh_remote_user: "user"         # remote - target of ssh-connection
+autossh_remote_host: "127.0.0.1" 
+autossh_remote_port: "1337"
+
+# target - is machine available from remote (and not necessarily available from current host), where we will bind port
+autossh_target_port: "1337"         # This is destination service on target endpoint which will serve as the tunnel exit, or destination service
+autossh_target_host: "127.0.0.1"     # Specify the address (ip preferred) of the target.
+
+autossh_tunnel_port: "1337"         # Port which will be exposed by container
+autossh_bind_ip: "127.0.0.1"         # You can define which IP address the tunnel will use to bind on remote (SSH_MODE of -R) or local (SSH_MODE of -L).
+
+autossh_docker_networks: null        # docker networks to make tunnel visible to

@@ -1,0 +1,5 @@
+---
+# tasks file for dockerized autossh service
+# includes task file with name == passed action
+
+- include_tasks: "{{ autossh_action }}.yml"

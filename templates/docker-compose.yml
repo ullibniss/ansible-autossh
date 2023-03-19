@@ -1,0 +1,36 @@
+version: "3.1"
+services:
+  autossh:
+    hostname: "{{ autossh_name }}"
+    container_name: "{{ autossh_name }}"
+    image: "jnovack/autossh@sha256:91b0fe5745bd7d1da4fa70fcb31f574694442bc70fa58d73ff93c679ba9d3464" # 2.0.1, using digest to prevent overriding by potentially insecure version
+    restart: always
+    volumes:
+      - "{{ autossh_deploy_dir }}/id_rsa:/id_rsa"
+      - "{{ autossh_deploy_dir }}/known_hosts:/known_hosts"
+    environment:
+      SSH_MODE: "{{ autossh_mode }}"
+
+      SSH_REMOTE_USER: "{{ autossh_remote_user }}"
+      SSH_REMOTE_HOST: "{{ autossh_remote_host }}"
+      SSH_REMOTE_PORT: "{{ autossh_remote_port }}"
+
+      SSH_TARGET_PORT: "{{ autossh_target_port }}"
+      SSH_TUNNEL_PORT: "{{ autossh_tunnel_port }}"
+      SSH_BIND_IP: "{{ autossh_bind_ip }}"
+{% if not autossh_docker_networks or autossh_mode == "-R" %}
+    network_mode: "host"
+{% else %}
+    networks:
+{% for network in autossh_docker_networks %}
+      - {{ network }}
+{% endfor %}
+
+
+networks:
+{% for network in autossh_docker_networks %}
+  {{ network }}:
+    external: true
+{% endfor %}
+
+{% endif %}

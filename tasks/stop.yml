@@ -1,0 +1,5 @@
+---
+- name: Stop autossh {{ autossh_name }} service
+  command: docker-compose stop
+  args:
+    chdir: "{{ autossh_deploy_dir }}"
